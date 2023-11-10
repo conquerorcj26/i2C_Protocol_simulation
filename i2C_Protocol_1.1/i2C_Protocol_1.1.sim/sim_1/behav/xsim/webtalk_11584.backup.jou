@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Fri Nov 10 12:19:25 2023
+# Process ID: 11584
+# Current directory: C:/Users/gagan/OneDrive/Desktop/i2C protocol/i2C_Protocol_1.1/i2C_Protocol_1.1.sim/sim_1/behav/xsim
+# Command line: wbtcv.exe -mode batch -source C:/Users/gagan/OneDrive/Desktop/i2C protocol/i2C_Protocol_1.1/i2C_Protocol_1.1.sim/sim_1/behav/xsim/xsim.dir/tb_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: C:/Users/gagan/OneDrive/Desktop/i2C protocol/i2C_Protocol_1.1/i2C_Protocol_1.1.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: C:/Users/gagan/OneDrive/Desktop/i2C protocol/i2C_Protocol_1.1/i2C_Protocol_1.1.sim/sim_1/behav/xsim\webtalk.jou
+#-----------------------------------------------------------
+source C:/Users/gagan/OneDrive/Desktop/i2C -notrace

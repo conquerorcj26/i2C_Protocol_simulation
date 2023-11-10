@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Fri Nov 10 22:43:43 2023
+# Process ID: 9836
+# Current directory: C:/Users/gagan/OneDrive/Desktop/career/Core Job/Projects/i2C protocol/i2C_Protocol_1.1
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent2456 C:\Users\gagan\OneDrive\Desktop\career\Core Job\Projects\i2C protocol\i2C_Protocol_1.1\i2C_Protocol_1.1.xpr
+# Log file: C:/Users/gagan/OneDrive/Desktop/career/Core Job/Projects/i2C protocol/i2C_Protocol_1.1/vivado.log
+# Journal file: C:/Users/gagan/OneDrive/Desktop/career/Core Job/Projects/i2C protocol/i2C_Protocol_1.1\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project {C:/Users/gagan/OneDrive/Desktop/career/Core Job/Projects/i2C protocol/i2C_Protocol_1.1/i2C_Protocol_1.1.xpr}
+update_compile_order -fileset sources_1
