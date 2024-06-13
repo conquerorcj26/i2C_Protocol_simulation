@@ -22,7 +22,7 @@ module main
   );
   
  reg sda_en = 0; //1(write):sda=dat 0(read):sda=z
- reg sclt, sdat, donet;  //temporary in-program usage
+ reg sclt, sdat;  //temporary in-program usage
  reg [7:0] rdatat;  //read data temp storage
  reg [7:0] addrt;  //8-bit  7-bit : + addr 1-bit : mode
  
