@@ -24,7 +24,7 @@ module main
  reg sda_en = 0; //1(write):sda=dat 0(read):sda=z
  reg sclt, sdat;  //temporary in-program usage
  reg [7:0] rdatat;  //read data temp storage
- reg [7:0] addrt;  //8-bit  7-bit : + addr 1-bit : mode
+  reg [7:0] addrt;  //8-bit = {7-bit_addr : 1-bit_mode}
  
  reg [3:0] state;  //13 states
  
@@ -64,8 +64,7 @@ module main
   //FSM
   always@(posedge sclk_wr, posedge rst)
     begin 
-      if(rst == 1'b1)
-         begin
+      if(rst == 1'b1) begin
            sclt  <= 1'b0;
            sdat  <= 1'b0;
            donet <= 1'b0;
@@ -85,50 +84,42 @@ module main
                 state  <= idle;         
            end
          
-            start: 
-            begin
+            start: begin
               sdat  <= 1'b0;
               sclt  <= 1'b1;
               state <= check_rw;
               addrt <= {addr,rw};
             end
             
-            check_rw: begin //addr remain same for both write and read
-              if(rw)
-                 begin
+           check_rw: begin //addr remain same for both write and read
+              if(rw) begin
                  state <= rsend_addr;
                  sdat <= addrt[0];
-                 i <= 1;
-                 end 
+                 i <= 1; end 
                else
                  begin
-                 state <= wsend_addr;
-                 sdat <= addrt[0];
-                 i <= 1;
-                 end  
+                   state <= wsend_addr;
+                   sdat <= addrt[0];
+                   i <= 1; end  
             end
          
          //write state
          
            wsend_addr : begin                
-                      if(i <= 7) begin
-                      sdat  <= addrt[i];
-                      i <= i + 1;
-                      end
-                      else
-                        begin
-                          i <= 0;
-                          state <= waddr_ack; 
-                        end   
-                    end
+                if(i <= 7) begin
+                   sdat  <= addrt[i];
+                   i <= i + 1; end
+                else begin
+                    i <= 0;
+                    state <= waddr_ack; end   
+            end
          
          
            waddr_ack : begin
              if(ack) begin
                state <= wsend_data;
                sdat  <= wdata[0];
-               i <= i + 1;
-               end
+               i <= i + 1; end
              else
                state <= waddr_ack;
            end
@@ -136,24 +127,20 @@ module main
          wsend_data : begin
            if(i <= 7) begin
               i     <= i + 1;
-              sdat  <= wdata[i]; 
-           end
+              sdat  <= wdata[i]; end
            else begin
               i     <= 0;
-              state <= wdata_ack;
-           end
+              state <= wdata_ack; end
          end
          
           wdata_ack : begin
              if(ack) begin
                state <= wstop;
                sdat <= 1'b0;
-               sclt <= 1'b1;
-               end
+               sclt <= 1'b1; end
              else begin
-               state <= wdata_ack;
-             end 
-            end
+               state <= wdata_ack; end 
+         end
          
               
          
@@ -164,70 +151,57 @@ module main
          end
          
          //read state
+           
+         rsend_addr : begin
+              if(i <= 7) begin
+                 sdat  <= addrt[i];
+                 i <= i + 1; end
+              else begin
+                 i <= 0;
+                 state <= raddr_ack; end   
+          end
          
          
-          rsend_addr : begin
-                     if(i <= 7) begin
-                      sdat  <= addrt[i];
-                      i <= i + 1;
-                      end
-                      else
-                        begin
-                          i <= 0;
-                          state <= raddr_ack; 
-                        end   
-                    end
-         
-         
-           raddr_ack : begin
+         raddr_ack : begin
              if(ack) begin
                state  <= rsend_data;
-               sda_en <= 1'b0;
-             end
+               sda_en <= 1'b0; end
              else
                state <= raddr_ack;
-           end
+         end
          
          rsend_data : begin
                    if(i <= 7) begin
                          i <= i + 1;
                          state <= rsend_data;
-                         rdata[i] <= sda;
-                      end
-                      else
-                        begin
+                       rdata[i] <= sda; end
+                    else begin
                           i <= 0;
                           sda_en <= 1'b1;
-                          state <= rdata_ack; 
-                        end         
-         end
+                          state <= rdata_ack; end         
+          end
          
          rdata_ack : begin
              if(ack) begin
                state <= rstop;
                sdat <= 1'b0;
-               sclt <= 1'b1;
-               end
+               sclt <= 1'b1; end
              else begin
-               state <= rdata_ack;
-             end 
+               state <= rdata_ack; end 
             end
         
-         
-         
          rstop: begin
               sdat  <=  1'b1;
               state <=  idle;
               done  <=  1'b1;  
-              end
-         
+         end
          
          default : state <= idle;
          
-          	 endcase
-          end
+         endcase
   end
+end
   
- assign scl = (( state == start) || ( state == wstop) || ( state == rstop)) ? sclt : sclk_wr;
- assign sda = (sda_en == 1'b1) ? sdat : 1'bz;
+assign scl = (( state == start) || ( state == wstop) || ( state == rstop)) ? sclt : sclk_wr;
+assign sda = (sda_en == 1'b1) ? sdat : 1'bz;
 endmodule
